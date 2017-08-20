@@ -22,12 +22,14 @@
  * Distribution method yet to choose
 
 ## How to build
- Using Qt Creator with adequate Qt libs: import, build*, run**!
- *Building for Windows requires 7za.exe to be put in win32/<target_arch>/
- **Runing on Linux requires p7zip
+ Using Qt Creator with adequate Qt libs: import, build, run!
+ 
+ Building for Windows requires 7za.exe to be put in win32/(i386|x64)/
+ 
+ Runing on Linux requires p7zip.
 
 ## Contributing
- Please do! Everything is welcome, from ideas to implementations
+ Please do! Everything is welcome, from ideas to implementations.
 
 ## rvgl: scheme definition
  * `rvgl:run?opt1&opt2=arg&opt3` → runs `rvgl <default options> -opt1 -opt2 arg -opt3`
