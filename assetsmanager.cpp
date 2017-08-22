@@ -59,10 +59,11 @@ void AssetsManager::installAsset(QUrl URL) {
 
 void AssetsManager::installAsset(int index, QFile* file) {
     QProcess* sevenzip = new QProcess();
-    sevenzip->setWorkingDirectory(settings.value("rvglDir").toString());
+    QString dir = settings.value("installs").toList()[settings.value("currentInstall").toInt()].toMap()["dir"].toString();
+    sevenzip->setWorkingDirectory(dir);
 #ifdef Q_OS_WIN
-    QFile::copy(":/7za.exe", settings.value("rvglDir").toString()+"\\7za.exe");
-    sevenzip->start(settings.value("rvglDir").toString()+"\\7za.exe x -y "+file->fileName().replace('/', '\\'));
+    QFile::copy(":/7za.exe", dir+"\\7za.exe");
+    sevenzip->start(dir+"\\7za.exe x -y "+file->fileName().replace('/', '\\'));
 #else
     sevenzip->start("7za x -y "+file->fileName());
 #endif
