@@ -1,17 +1,12 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import AssetsManager 1.0
 
 Page {
     id: page
     title: "Package installer"
 
     property string option: window.option
-
-    AssetsManager {
-        id: assetsManager
-    }
 
     ColumnLayout {
         width: parent.width
@@ -111,6 +106,11 @@ Page {
                 to: 100
                 value: modelData
                 Layout.fillWidth: true
+                onValueChanged:{
+                    if (value === 100) {
+                        visible = false
+                    }
+                }
             }
         }
         Button {

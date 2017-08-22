@@ -5,6 +5,7 @@ import QtQuick.Controls.Universal 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.1
 import Qt.labs.settings 1.0
+import AssetsManager 1.0
 
 ApplicationWindow {
     visible: true
@@ -21,6 +22,10 @@ ApplicationWindow {
         if (func == "install_asset") {
             stackView.push("qrc:/AssetsInstallPage.qml")
         }
+    }
+
+    AssetsManager {
+        id: assetsManager
     }
 
     Settings {

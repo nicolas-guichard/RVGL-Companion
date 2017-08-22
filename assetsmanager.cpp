@@ -39,7 +39,7 @@ QVariantList AssetsManager::progresses() {
 
 void AssetsManager::setProgress(int index, qint64 a, qint64 b) {
     if (b > 0) {
-        m_progresses[index] = (100.0*a/b);
+        m_progresses[index] = (90.0*a/b);
         emit progressesChanged();
     }
 }
@@ -66,6 +66,10 @@ void AssetsManager::installAsset(int index, QFile* file) {
 #else
     sevenzip->start("7za x -y "+file->fileName());
 #endif
-    connect(sevenzip, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
-            [=](){ sevenzip->deleteLater(); m_downloads[index]->deleteLater(); });
+    connect(sevenzip, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), [=](){
+        sevenzip->deleteLater();
+        m_downloads[index]->deleteLater();
+        m_progresses[index] = 100;
+        emit progressesChanged();
+    });
 }
