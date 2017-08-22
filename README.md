@@ -34,5 +34,4 @@
 ## rvgl: scheme definition
  * `rvgl:run?opt1&opt2=arg&opt3` → runs `rvgl <default options> -opt1 -opt2 arg -opt3`
  * `rvgl:join?IP=<IP>` → runs `rvgl <default options> -lobby <IP>`
- * `rvgl:install_month` → opens the app ready to install month tracks
  * `rvgl:install_asset?URL=<URL>` → opens the app ready to install asset at <URL>
