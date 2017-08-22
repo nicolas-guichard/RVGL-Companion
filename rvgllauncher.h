@@ -10,14 +10,13 @@ class RVGLLauncher : public QObject
     Q_OBJECT
 public:
     explicit RVGLLauncher(QObject *parent = nullptr);
-    Q_INVOKABLE int launch(QStringList);
+    Q_INVOKABLE void launch(QString, QStringList);
 
 signals:
 
 public slots:
 
 private:
-    QSettings settings;
 };
 
 #endif // RVGLLAUNCHER_H

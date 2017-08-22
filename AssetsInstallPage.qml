@@ -1,25 +1,21 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import AssetsManager 1.0
 
 Page {
     id: page
-    title: "Install RVGL or assets"
+    title: "Package installer"
 
-    property string option
+    property string option: window.option
 
-    PropertyChanges {
-        target: assetsManager
-        onProgressChanged: {
-            if (this.progress === 100){
-                confirm.enabled = true
-                progress.visible = false
-            }
-        }
+    AssetsManager {
+        id: assetsManager
     }
 
     ColumnLayout {
         width: parent.width
+        id: column
         Label {
             Layout.fillWidth: true
             text: "Select a download in the combobox below or enter a url to an archive to be extracted "
@@ -63,8 +59,8 @@ Page {
                         source: "http://files.re-volt.io/packs/clockworks.7z"
                     }
                     ListElement {
-                        modelData: "607's long track pack"
-                        source: "https://drive.google.com/uc?export=download&confirm=jqs8&id=0BzspstE6B00SMGFOcDRLS2ZMY1E"
+                        modelData: "RVR month track pack"
+                        source: "http://files.re-volt.io/packs/month_pack.7z"
                     }
                 }
                 currentIndex: -1
@@ -81,7 +77,6 @@ Page {
                     }
                 }
             }
-
         }
 
         RowLayout {
@@ -102,16 +97,28 @@ Page {
             Button {
                 id: confirm
                 text: "Install"
-                onClicked: assetsManager.installAsset(assetURL.text)
-                enabled: assetsManager.runningDownloads === 0
+                onClicked: {
+                    assetsManager.installAsset(assetURL.text)
+                }
+                enabled: assetURL.text !== ""
             }
         }
-        ProgressBar {
-            id: progress
-            visible: assetsManager.runningDownloads !== 0
-            from: 0
-            to: 100
-            value: assetsManager.progress
+        Repeater {
+            id: progressBars
+            model: assetsManager.progresses
+            ProgressBar {
+                from: 0
+                to: 100
+                value: modelData
+                Layout.fillWidth: true
+            }
+        }
+        Button {
+            text: "Fix filename cases (done automatically after installs)"
+            onClicked: {
+                assetsManager.fixCases()
+            }
+            visible: Qt.platform.os !== "windows"
             Layout.fillWidth: true
         }
     }

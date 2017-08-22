@@ -14,40 +14,31 @@
 class AssetsManager : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int progress READ progress NOTIFY progressChanged)
-    Q_PROPERTY(int runningDownloads READ runningDownloads NOTIFY runningDownloadsChanged)
+    Q_PROPERTY(QVariantList progresses READ progresses NOTIFY progressesChanged)
 
 public:
     explicit AssetsManager(QObject *parent = nullptr);
     Q_INVOKABLE void installAsset(QString);
-    Q_INVOKABLE void installMonth();
 #ifndef Q_OS_WIN
     Q_INVOKABLE void fixCases();
 #endif
-    int progress();
-    int runningDownloads();
+    QVariantList progresses();
 
 signals:
-    void progressChanged();
-    void runningDownloadsChanged();
+    void progressesChanged();
 
 private slots:
-    void installAsset(QFile*);
-    void installMonth(QFile*);
-    void setProgress(qint64, qint64);
-    void setOverallProgress();
-    void downloadFinished();
+    void installAsset(int, QFile*);
 
 private:
 #ifndef Q_OS_WIN
     void fixCases(QDir);
 #endif
+    void setProgress(int, qint64, qint64);
     void installAsset(QUrl);
-    FileDownloader* installAssetRaw(QUrl);
     QSettings settings;
-    int m_progress;
-    int m_running_downloads;
-    int m_downloads;
+    QVariantList m_progresses;
+    QList<FileDownloader*> m_downloads;
 };
 
 #endif // ASSETSMANAGER_H

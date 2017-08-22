@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
                            "Version=1.0\n"
                            "Type=Application\n"
                            "Exec="+QGuiApplication::applicationFilePath()+" %u\n"
-                           "Icon="+QGuiApplication::applicationDirPath()+"/images/icon.png\n"
+                           "Icon="+QGuiApplication::applicationDirPath()+"/icon.png\n"
                            "StartupNotify=true\n"
                            "Terminal=false\n"
                            "Categories=Utility;\n"
@@ -89,15 +89,19 @@ int main(int argc, char *argv[])
         func = url.fileName();
         QUrlQuery query(url);
         if (func == "run" || func == "join") {
-            QStringList launchOptions = settings.value("rvglDefaultOptions", "").toString().split(' ');
-            QPair<QString, QString> option;
-            foreach (option, query.queryItems()) {
-                launchOptions << "-"+option.first << option.second;
+            RVGLLauncher* launcher = new RVGLLauncher();
+            QString dir = settings.value("installs").toList()[0].toMap()["dir"].toString();
+            QStringList launchOptions = settings.value("installs").toList()[0].toMap()["options"].toString().split(' ');
+            QPair<QString, QString> optionPair;
+            foreach (optionPair, query.queryItems()) {
+                launchOptions << "-"+optionPair.first << optionPair.second;
             }
             if (func == "join") {
-                launchOptions << " -lobby "+query.queryItemValue("IP");
+                launchOptions << "-lobby "+query.queryItemValue("IP");
             }
-            return RVGLLauncher().launch(launchOptions);
+            launcher->launch(dir, launchOptions);
+            QObject::connect(launcher, SIGNAL (destroyed()), &app, SLOT (quit()));
+            return app.exec();
         } else if (func == "install_asset") {
             option = query.queryItemValue("URL");
         }

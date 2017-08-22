@@ -3,29 +3,25 @@
 FileDownloader::FileDownloader(QUrl url, QObject *parent) :
     QObject(parent)
 {
-    m_WebCtrl.setRedirectPolicy(QNetworkRequest::ManualRedirectPolicy);
-    connect(&m_WebCtrl, SIGNAL (finished(QNetworkReply*)), this, SLOT (fileDownloaded(QNetworkReply*)));
     QNetworkRequest request(url);
-    m_url = url;
+    file.setFileName(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)+"/"+url.fileName());
+    file.open(QIODevice::ReadWrite);
     m_reply = m_WebCtrl.get(request);
-    connect(m_reply, SIGNAL(downloadProgress(qint64, qint64)), this, SIGNAL(progressChanged(qint64,qint64)));
+    connect(m_reply, SIGNAL (readyRead()), this, SLOT (newData()));
+    connect(m_reply, SIGNAL (downloadProgress(qint64, qint64)), this, SIGNAL(progressChanged(qint64,qint64)));
+    connect(m_reply, SIGNAL (finished()), this, SLOT (noMoreData()));
 }
 
-FileDownloader::~FileDownloader() { }
+FileDownloader::~FileDownloader() {
+    file.remove();
+}
 
-void FileDownloader::fileDownloaded(QNetworkReply* pReply) {
-    if (pReply->hasRawHeader("Location")) {
-        m_url = pReply->rawHeader("Location");
-        QNetworkRequest request(m_url);
-        m_reply = m_WebCtrl.get(request);
-        connect(m_reply, SIGNAL(downloadProgress(qint64, qint64)), this, SIGNAL(progressChanged(qint64,qint64)));
-    } else {
-        QByteArray data = pReply->readAll();
-        QString fileName = m_url.fileName();
-        m_file.setFileName(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)+"/"+fileName);
-        m_file.open(QIODevice::ReadWrite);
-        m_file.write(data);
-        pReply->deleteLater();
-        emit downloaded(&m_file);
-    }
+void FileDownloader::newData(){
+    file.write(m_reply->readAll());
+}
+
+void FileDownloader::noMoreData(){
+    file.close();
+    m_reply->deleteLater();
+    emit downloaded(&file);
 }

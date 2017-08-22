@@ -28,7 +28,6 @@
         <file>images/menu@4x.png</file>
         <file>RVGLLaunchPage.qml</file>
         <file>AssetsInstallPage.qml</file>
-        <file>MonthInstallPage.qml</file>
         <file>icon.ico</file>
     </qresource>
 </RCC>

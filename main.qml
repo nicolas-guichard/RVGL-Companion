@@ -5,8 +5,6 @@ import QtQuick.Controls.Universal 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.1
 import Qt.labs.settings 1.0
-import AssetsManager 1.0
-import RVGLLauncher 1.0
 
 ApplicationWindow {
     visible: true
@@ -22,35 +20,18 @@ ApplicationWindow {
     onFuncChanged: {
         if (func == "install_asset") {
             stackView.push("qrc:/AssetsInstallPage.qml")
-        } else if (func == "install_month") {
-            stackView.push("MonthInstallPage.qml")
         }
-    }
-
-    onOptionChanged: {
-        stackView.currentItem.option = option
-    }
-
-    onAvailableStylesChanged: {
-        styleBox.model = availableStyles
-        styleBox.styleIndex = styleBox.find(settings.style, Qt.MatchFixedString)
-        if (styleBox.styleIndex !== -1)
-            styleBox.currentIndex = styleBox.styleIndex
     }
 
     Settings {
         id: settings
+        property alias x: window.x
+        property alias y: window.y
+        property alias width: window.width
+        property alias height: window.height
         property string style: "Default"
-        property string rvglDir: ""
-        property string rvglDefaultOptions: "-sload -nointro"
-    }
-
-    AssetsManager {
-        id: assetsManager
-    }
-
-    RVGLLauncher {
-        id: launcher
+        property var installs: [{name: "Default (quick launch)", dir: "", options: "-nointro -profile"}]
+        property int currentInstall: 0
     }
 
     header: ToolBar {
@@ -64,16 +45,10 @@ ApplicationWindow {
                     fillMode: Image.Pad
                     horizontalAlignment: Image.AlignHCenter
                     verticalAlignment: Image.AlignVCenter
-                    source: stackView.depth > 1 ? "images/back.png" : "images/drawer.png"
+                    source: "images/back.png"
                 }
-                onClicked: {
-                    if (stackView.depth > 1) {
-                        stackView.pop()
-                        listView.currentIndex = -1
-                    } else {
-                        drawer.open()
-                    }
-                }
+                onClicked: stackView.pop()
+                visible: stackView.depth > 1
             }
 
             Label {
@@ -113,40 +88,8 @@ ApplicationWindow {
         }
     }
 
-    Drawer {
-        id: drawer
-        width: Math.min(window.width, window.height) / 3 * 2
-        topMargin: header.height
-        height: window.height - header.height
-        dragMargin: stackView.depth > 1 ? 0 : undefined
-
-        ListView {
-            id: listView
-
-            focus: true
-            currentIndex: -1
-            anchors.fill: parent
-
-            delegate: ItemDelegate {
-                width: parent.width
-                text: model.title
-                highlighted: ListView.isCurrentItem
-                onClicked: {
-                    listView.currentIndex = index
-                    stackView.push(model.source)
-                    drawer.close()
-                }
-            }
-
-            model: pages
-
-            ScrollIndicator.vertical: ScrollIndicator { }
-        }
-    }
-
     ListModel {
         id: pages
-        ListElement {title: "Install RVR month tracks"; source: "qrc:/MonthInstallPage.qml"}
         ListElement {title: "Install RVGL or assets"; source: "qrc:/AssetsInstallPage.qml"}
         ListElement {title: "Launch RVGL"; source: "qrc:/RVGLLaunchPage.qml"}
     }
@@ -161,7 +104,6 @@ ApplicationWindow {
             title: "RVGL Companion"
             Flow {
                 spacing: 15
-                anchors.fill: parent
                 Repeater {
                     model: pages
                     Button {
@@ -170,13 +112,6 @@ ApplicationWindow {
                             stackView.push(model.source)
                         }
                     }
-                }
-                Button {
-                    text: "Fix filename cases"
-                    onClicked: {
-                        assetsManager.fixCases()
-                    }
-                    visible: Qt.platform.os !== "windows"
                 }
             }
         }
@@ -191,18 +126,21 @@ ApplicationWindow {
         focus: true
         title: "Settings"
 
-        visible: settings.rvglDir == ""
+        visible: settings.installs[0]["dir"] === ""
+
+        property var installsMirror: settings.installs
 
         standardButtons: Dialog.Ok | Dialog.Cancel
         onAccepted: {
-            settings.rvglDir = rvglDirBox.text
-            settings.rvglDefaultOptions = rvglDefaultOptionsBox.text
+            settings.currentInstall = rvglInstallComboBox.currentIndex
+            settings.installs = installsMirror
+            rvglInstallComboBox.currentIndex = settings.currentInstall
             settings.style = styleBox.displayText
             settingsDialog.close()
         }
         onRejected: {
-            rvglDirBox.text = settings.rvglDir
-            rvglDefaultOptionsBox.text = settings.rvglDefaultOptions
+            installsMirror = settings.installs
+            rvglInstallComboBox.currentIndex = settings.currentInstall
             styleBox.currentIndex = styleBox.styleIndex
             settingsDialog.close()
         }
@@ -215,15 +153,51 @@ ApplicationWindow {
                 spacing: 10
 
                 Label {
+                    text: "Install:"
+                }
+
+                ComboBox {
+                    id: rvglInstallComboBox
+                    editable: true
+                    model: settingsDialog.installsMirror
+                    textRole: "name"
+                    Layout.fillWidth: true
+                    currentIndex: settings.currentInstall
+                    onAccepted: {
+                        if (find(editText) === -1) {
+                            currentIndex = 0
+                            settingsDialog.installsMirror.push({name: editText, dir: "", options: ""})
+                            currentIndex = model.length-1
+                            model = settingsDialog.installsMirror
+                        }
+                    }
+                }
+
+                Button {
+                    text: "×"
+                    onClicked: {
+                        rvglInstallComboBox.decrementCurrentIndex()
+                        settingsDialog.installsMirror.splice(rvglInstallComboBox.currentIndex+1, 1)
+                        rvglInstallComboBox.model = settingsDialog.installsMirror
+                    }
+                    enabled: rvglInstallComboBox.currentIndex !== 0
+                }
+            }
+
+            RowLayout {
+                spacing: 10
+
+                Label {
                     text: "RVGL directory:"
                     color: rvglDirBox.text == "" ? "#e41e25" : "black"
                 }
 
                 Button {
                     id: rvglDirBox
-                    text: settings.rvglDir
+                    text: settingsDialog.installsMirror[rvglInstallComboBox.currentIndex]["dir"]
                     Layout.fillWidth: true
                     onClicked: fileDialog.open()
+                    onTextChanged: settingsDialog.installsMirror[rvglInstallComboBox.currentIndex]["dir"] = text
                 }
             }
 
@@ -235,8 +209,9 @@ ApplicationWindow {
                 }
 
                 TextField {
-                    id: rvglDefaultOptionsBox
-                    text: settings.rvglDefaultOptions
+                    id: rvglLaunchOptionsBox
+                    text: settingsDialog.installsMirror[rvglInstallComboBox.currentIndex]["options"]
+                    onTextChanged: settingsDialog.installsMirror[rvglInstallComboBox.currentIndex]["options"] = text
                     Layout.fillWidth: true
                 }
             }
@@ -252,6 +227,12 @@ ApplicationWindow {
                     id: styleBox
                     property int styleIndex: -1
                     Layout.fillWidth: true
+                    model: window.availableStyles
+                    onModelChanged: {
+                        styleIndex = find(settings.style, Qt.MatchFixedString)
+                        if (styleIndex !== -1)
+                            currentIndex = styleIndex
+                    }
                 }
             }
 
@@ -272,10 +253,11 @@ ApplicationWindow {
             selectFolder: true
             onAccepted: {
                 if (Qt.platform.os === "windows") {
-                    rvglDirBox.text = fileUrl.toString().substring(8).replace(/\//g,'\\')
+                    settingsDialog.installsMirror[rvglInstallComboBox.currentIndex]["dir"] = fileUrl.toString().substring(8).replace(/\//g,'\\')
                 } else {
-                    rvglDirBox.text = fileUrl.toString().substring(7)
+                    settingsDialog.installsMirror[rvglInstallComboBox.currentIndex]["dir"] = fileUrl.toString().substring(7)
                 }
+                settingsDialog.installsMirror = settingsDialog.installsMirror
             }
         }
     }
@@ -304,20 +286,11 @@ ApplicationWindow {
             Label {
                 width: aboutDialog.availableWidth
                 text: "It will enable you to:\n"
-                    + " ✔️ install RVGL as well as any complementary asset pack available as an archive.\n"
-                    + " ✔️ install RVR month tracks automagically.\n"
+                    + " ✔️ install RVGL as well as any complementary asset pack available as downloadable archive.\n"
                     + " ✔️ launch RVGL with custom options."
+                    + (Qt.platform.os !== "windows" ? "\n ✔️ fix filename cases." : "")
                 wrapMode: Label.Wrap
                 font.pixelSize: 12
-            }
-
-            Label {
-                width: aboutDialog.availableWidth
-                text: "As you use an actually good OS with case-sensitive filename support, "
-                    + "it will also take care of filename cases for you!"
-                wrapMode: Label.Wrap
-                font.pixelSize: 12
-                visible: Qt.platform.os !== "windows"
             }
 
             Label {
@@ -332,7 +305,7 @@ ApplicationWindow {
                 width: aboutDialog.availableWidth
                 text: "Due credits"
                 font.bold: true
-                font.pixelSize: 24
+                font.pixelSize: 16
             }
 
             Label {
@@ -356,7 +329,7 @@ ApplicationWindow {
                 width: aboutDialog.availableWidth
                 text: "Licence"
                 font.bold: true
-                font.pixelSize: 24
+                font.pixelSize: 16
             }
 
             Label {
