@@ -6,7 +6,7 @@ AssetsManager::AssetsManager(QObject *parent) : QObject(parent)
 
 #ifndef Q_OS_WIN
 void AssetsManager::fixCases() {
-    fixCases(QDir(settings.value("rvglDir").toString()));
+    fixCases(QDir(settings.value("installs").toList()[settings.value("currentInstall").toInt()].toMap()["dir"].toString()));
 }
 
 void AssetsManager::fixCases(QDir directory) {
