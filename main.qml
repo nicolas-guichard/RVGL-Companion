@@ -218,6 +218,7 @@ ApplicationWindow {
                     text: settingsDialog.installsMirror[rvglInstallComboBox.currentIndex]["options"]
                     onTextChanged: settingsDialog.installsMirror[rvglInstallComboBox.currentIndex]["options"] = text
                     Layout.fillWidth: true
+                    selectByMouse: true
                 }
             }
 

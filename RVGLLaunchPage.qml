@@ -194,7 +194,7 @@ Page {
                 }
             }
             Button {
-                text: "Set as default for current profile"
+                text: "Set as default for current install"
                 onClicked: {
                     settingsDialog.installsMirror[settings.currentInstall]["options"] = options.join(" ")
                     settings.installs = settingsDialog.installsMirror

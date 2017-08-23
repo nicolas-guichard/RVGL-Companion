@@ -87,6 +87,7 @@ Page {
                 id: assetURL
                 Layout.fillWidth: true
                 text: option
+                selectByMouse: true
             }
 
             Button {
