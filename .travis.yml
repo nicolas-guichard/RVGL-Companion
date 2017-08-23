@@ -1,0 +1,12 @@
+language: cpp
+sudo: required
+dist: trusty
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -y qtbase5-dev qtdeclarative5-dev
+ - sudo apt-get install -y qt5-default qttools5-dev-tools
+
+script:
+ - qmake -project
+ - qmake RVGL_Companion.pro
+ - make
