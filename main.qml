@@ -30,13 +30,18 @@ ApplicationWindow {
 
     Settings {
         id: settings
+        property string style: "Default"
+        property var installs: [{name: "Default (quick launch)", dir: "", options: "-nointro -profile"}]
+        property int currentInstall: 0
+    }
+
+    Settings {
+        category: "window"
+
         property alias x: window.x
         property alias y: window.y
         property alias width: window.width
         property alias height: window.height
-        property string style: "Default"
-        property var installs: [{name: "Default (quick launch)", dir: "", options: "-nointro -profile"}]
-        property int currentInstall: 0
     }
 
     header: ToolBar {
@@ -144,6 +149,13 @@ ApplicationWindow {
             settingsDialog.close()
         }
         onRejected: {
+            var settings = Qt.createQmlObject('import Qt.labs.settings 1.0;
+    Settings {
+        id: settings
+        property string style: "Default"
+        property var installs: [{name: "Default (quick launch)", dir: "", options: "-nointro -profile"}]
+        property int currentInstall: 0
+    }', window)
             installsMirror = settings.installs
             rvglInstallComboBox.currentIndex = settings.currentInstall
             styleBox.currentIndex = styleBox.styleIndex

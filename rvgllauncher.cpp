@@ -16,5 +16,5 @@ void RVGLLauncher::launch(QString dir, QStringList launchOptions) {
     rvgl->setWorkingDirectory(dir);
     rvgl->start(path, launchOptions);
     connect(rvgl, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
-            [=](){ rvgl->deleteLater(); this->deleteLater(); });
+            [=](){ rvgl->deleteLater(); });
 }
