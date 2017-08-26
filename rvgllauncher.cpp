@@ -4,7 +4,11 @@ RVGLLauncher::RVGLLauncher(QObject *parent) : QObject(parent)
 {
 }
 
-QProcess* RVGLLauncher::launch(QString dir, QStringList launchOptions) {
+void RVGLLauncher::launch(QString dir, QStringList launchOptions) {
+    launchRaw(dir, launchOptions);
+}
+
+QProcess* RVGLLauncher::launchRaw(QString dir, QStringList launchOptions) {
     QString exe;
     #ifdef Q_OS_WIN
         exe = "\\rvgl.exe";

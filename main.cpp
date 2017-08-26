@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
             if (func == "join") {
                 launchOptions << "-lobby "+query.queryItemValue("IP");
             }
-            QProcess* rvgl = launcher->launch(dir, launchOptions);
+            QProcess* rvgl = launcher->launchRaw(dir, launchOptions);
             QObject::connect(rvgl, SIGNAL (destroyed()), &app, SLOT (quit()));
             return app.exec();
         } else if (func == "install_asset") {
