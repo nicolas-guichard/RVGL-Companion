@@ -4,6 +4,9 @@ CONFIG += c++11
 
 RC_ICONS = icon.ico
 
+include(singleapplication/singleapplication.pri)
+DEFINES += QAPPLICATION_CLASS=QGuiApplication
+
 SOURCES += main.cpp \
     assetsmanager.cpp \
     filedownloader.cpp \

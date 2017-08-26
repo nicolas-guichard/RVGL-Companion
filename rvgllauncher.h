@@ -10,7 +10,7 @@ class RVGLLauncher : public QObject
     Q_OBJECT
 public:
     explicit RVGLLauncher(QObject *parent = nullptr);
-    Q_INVOKABLE void launch(QString, QStringList);
+    Q_INVOKABLE QProcess* launch(QString, QStringList);
 
 signals:
 

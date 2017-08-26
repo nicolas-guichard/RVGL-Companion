@@ -19,7 +19,7 @@ ApplicationWindow {
     property var availableStyles
 
     onFuncChanged: {
-        if (func == "install_asset") {
+        if (func == "install_asset" && stackView.currentItem.name !== "asset_installer") {
             stackView.push("qrc:/AssetsInstallPage.qml")
         }
     }
