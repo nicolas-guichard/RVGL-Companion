@@ -2,7 +2,6 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
-import RVGLLauncher 1.0
 
 Page {
     id: page
@@ -10,10 +9,6 @@ Page {
 
     property var options: settings.installs[settings.currentInstall]["options"].split(' ')
     property string dir: settings.installs[settings.currentInstall]["dir"]
-
-    RVGLLauncher {
-        id: launcher
-    }
 
     Flickable {
         anchors.fill: parent
@@ -122,7 +117,7 @@ Page {
                         id: lobbyClient
                         text: checked ? "" : "Client"
                         visible: lobby.checked
-                        checked: !options[options.indexOf("-lobby")+1].startsWith("-")
+                        checked: lobby.checked & !options[options.indexOf("-lobby")+1].startsWith("-")
                         onCheckStateChanged: {
                             checked ? options.splice(options.indexOf("-lobby")+1, 0, lobbyAddress.text) : options.splice(options.indexOf("-lobby")+1, 1)
                         }

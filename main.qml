@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.1
 import Qt.labs.settings 1.0
 import AssetsManager 1.0
+import RVGLLauncher 1.0
 
 ApplicationWindow {
     visible: true
@@ -26,6 +27,10 @@ ApplicationWindow {
 
     AssetsManager {
         id: assetsManager
+    }
+
+    RVGLLauncher {
+        id: launcher
     }
 
     Settings {

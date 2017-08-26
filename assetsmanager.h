@@ -39,6 +39,7 @@ private:
     QSettings settings;
     QVariantList m_progresses;
     QList<FileDownloader*> m_downloads;
+    int m_ongoingInstalls;
 };
 
 #endif // ASSETSMANAGER_H
