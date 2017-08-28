@@ -37,11 +37,14 @@ private:
     struct UPNPDev * devlist = 0;
     struct UPNPUrls urls;
     struct IGDdatas data;
+<<<<<<< HEAD
 
 #ifdef _WIN32
     WSADATA wsaData;
     int nResult;
 #endif
+=======
+>>>>>>> First support for auto-opening rvgl port with UPnP
 };
 
 #endif // RVGLLAUNCHER_H
