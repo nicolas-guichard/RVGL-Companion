@@ -15,8 +15,7 @@ Page {
         contentWidth: col.width
         contentHeight: col.height
 
-        Column {
-            width: page.width
+        ColumnLayout {
             id: col
             Grid {
                 id: settingsGrid
@@ -200,6 +199,17 @@ Page {
             Button {
                 text: "Launch!"
                 onClicked: launcher.launch(dir, options)
+                Layout.fillWidth: true
+            }
+            RowLayout {
+                Button {
+                    text: "Open port (automatic if server)"
+                    onClicked: launcher.openPort()
+                }
+                Button {
+                    text: "Close port"
+                    onClicked: launcher.closePort()
+                }
             }
         }
     }
