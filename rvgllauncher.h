@@ -6,7 +6,9 @@
 #include <QProcess>
 #include <miniupnpc/upnpcommands.h>
 #include <miniupnpc/miniupnpc.h>
-#include <miniupnpc/upnperrors.h>
+#ifdef _WIN32
+#include <winsock2.h>
+#endif
 
 class RVGLLauncher : public QObject
 {
@@ -35,6 +37,11 @@ private:
     struct UPNPDev * devlist = 0;
     struct UPNPUrls urls;
     struct IGDdatas data;
+
+#ifdef _WIN32
+    WSADATA wsaData;
+    int nResult;
+#endif
 };
 
 #endif // RVGLLAUNCHER_H
