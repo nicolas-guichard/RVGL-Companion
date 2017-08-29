@@ -4,6 +4,7 @@ dist: trusty
 addons:
   apt:
     sources:
+    - ubuntu-toolchain-r-test
     - sourceline: 'ppa:beineri/opt-qt591-trusty'
     packages:
     - g++-5
