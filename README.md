@@ -1,4 +1,6 @@
 # RVGL Companion
+[![Travis CI](https://travis-ci.org/Nico264/RVGL-Companion.svg?branch=master)](https://travis-ci.org/Nico264/RVGL-Companion) [![AppVeyor](https://ci.appveyor.com/api/projects/status/unb6x2crul0x4mec/branch/master?svg=true)](https://ci.appveyor.com/project/Nico264/rvgl-companion/branch/master)
+
  A companion app for RVGL.
 
 ## Supported platforms
@@ -7,7 +9,6 @@
 
 ## What to expect
  * Asset Manager: easy download and install of any RVGL-related content meant to be directly extracted to your RVGL install dir (no removal yet)
- * Re-Volt Race month tracks installer
  * RVGL Launcher
  * Click-to-install and click-to-launch thanks to the rvgl: custom URI scheme
 
