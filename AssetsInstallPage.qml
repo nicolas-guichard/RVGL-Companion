@@ -6,6 +6,8 @@ Page {
     id: page
     title: "Package installer"
 
+    property string name: "asset_installer"
+
     property string option: window.option
 
     ColumnLayout {

@@ -5,6 +5,10 @@ RVGLLauncher::RVGLLauncher(QObject *parent) : QObject(parent)
 }
 
 void RVGLLauncher::launch(QString dir, QStringList launchOptions) {
+    launchRaw(dir, launchOptions);
+}
+
+QProcess* RVGLLauncher::launchRaw(QString dir, QStringList launchOptions) {
     QString exe;
     #ifdef Q_OS_WIN
         exe = "\\rvgl.exe";
@@ -16,5 +20,6 @@ void RVGLLauncher::launch(QString dir, QStringList launchOptions) {
     rvgl->setWorkingDirectory(dir);
     rvgl->start(path, launchOptions);
     connect(rvgl, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
-            [=](){ rvgl->deleteLater(); this->deleteLater(); });
+            [=](){ rvgl->deleteLater(); });
+    return rvgl;
 }

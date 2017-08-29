@@ -2,6 +2,7 @@
 
 AssetsManager::AssetsManager(QObject *parent) : QObject(parent)
 {
+    m_ongoingInstalls = 0;
 }
 
 #ifndef Q_OS_WIN
@@ -49,6 +50,7 @@ void AssetsManager::installAsset(QString URL) {
 }
 
 void AssetsManager::installAsset(QUrl URL) {
+    m_ongoingInstalls++;
     int myIndex = m_downloads.length();
     m_downloads.append(new FileDownloader(URL, this));
     m_progresses.append(0);
@@ -71,6 +73,14 @@ void AssetsManager::installAsset(int index, QFile* file) {
         sevenzip->deleteLater();
         m_downloads[index]->deleteLater();
         m_progresses[index] = 100;
+        m_ongoingInstalls--;
+        if (m_ongoingInstalls == 0) {
+            m_progresses.clear();
+            m_downloads.clear();
+#ifndef Q_OS_WIN
+            fixCases();
+#endif
+        }
         emit progressesChanged();
     });
 }

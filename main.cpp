@@ -1,4 +1,5 @@
 #include <QGuiApplication>
+#include <singleapplication.h>
 #include <QQmlApplicationEngine>
 #include <QCommandLineParser>
 #include <QUrl>
@@ -6,6 +7,7 @@
 #include <QSettings>
 #include <QIcon>
 #include <QQuickStyle>
+#include <QWindow>
 #include "assetsmanager.h"
 #include "rvgllauncher.h"
 
@@ -19,7 +21,7 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    SingleApplication app(argc, argv, true);
     app.setApplicationName("RVGL Companion");
     app.setOrganizationName("Re-Volt.io");
     app.setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -99,12 +101,17 @@ int main(int argc, char *argv[])
             if (func == "join") {
                 launchOptions << "-lobby "+query.queryItemValue("IP");
             }
-            launcher->launch(dir, launchOptions);
-            QObject::connect(launcher, SIGNAL (destroyed()), &app, SLOT (quit()));
+            QProcess* rvgl = launcher->launchRaw(dir, launchOptions);
+            QObject::connect(rvgl, SIGNAL (destroyed()), &app, SLOT (quit()));
             return app.exec();
         } else if (func == "install_asset") {
             option = query.queryItemValue("URL");
         }
+    }
+
+    if (app.isSecondary()){
+        app.sendMessage(func.toLatin1()+'\\'+option.toLatin1());
+        return 0;
     }
 
     QString style = QQuickStyle::name();
@@ -118,6 +125,21 @@ int main(int argc, char *argv[])
     engine.rootObjects().at(0)->setProperty("availableStyles", QQuickStyle::availableStyles());
     engine.rootObjects().at(0)->setProperty("func", func);
     engine.rootObjects().at(0)->setProperty("option", option);
+
+    QObject::connect(
+        &app, SIGNAL (instanceStarted()),
+        engine.rootObjects().at(0), SLOT (raise())
+    );
+
+    QObject::connect(
+        &app, &SingleApplication::receivedMessage, [&](qint32 id, QByteArray message) {
+            qDebug() << "Secondary instance" << id << "sent us" << message;
+            engine.rootObjects().at(0)->setProperty("func", "");
+            engine.rootObjects().at(0)->setProperty("func", message.split('\\')[0]);
+            engine.rootObjects().at(0)->setProperty("option", "");
+            engine.rootObjects().at(0)->setProperty("option", message.split('\\')[1]);
+        }
+    );
 
     return app.exec();
 }
