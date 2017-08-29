@@ -1,5 +1,4 @@
 #include "rvgllauncher.h"
-#include <QDebug>
 
 int RVGLLauncher::openPort() {
     return UPNP_AddPortMapping(urls.controlURL, data.first.servicetype,

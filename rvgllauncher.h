@@ -10,6 +10,10 @@
 #include <winsock2.h>
 #endif
 
+#ifndef UPNP_LOCAL_PORT_ANY
+#define UPNP_LOCAL_PORT_ANY 0
+#endif
+
 class RVGLLauncher : public QObject
 {
     Q_OBJECT
