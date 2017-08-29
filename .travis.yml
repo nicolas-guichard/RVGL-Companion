@@ -1,0 +1,30 @@
+language: cpp
+sudo: required
+dist: trusty
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    - sourceline: 'ppa:beineri/opt-qt591-trusty'
+    packages:
+    - g++-5
+    - build-essential
+    - qt59base
+    - qt59quickcontrols2
+    - qt59declarative
+    - qt59quickcontrols
+
+before_script:
+  - 'if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    . /opt/qt59/bin/qt59-env.sh;
+    export DISPLAY=:99.0;
+    sh -e /etc/init.d/xvfb start;
+    echo "give xvfb some time to start";
+    sleep 3;
+  fi'
+  - qmake --version
+
+script:
+  - mkdir "build" && cd build
+  - qmake ../ PREFIX=/usr CONFIG+=GIT
+  - make
