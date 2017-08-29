@@ -1,0 +1,32 @@
+version: 1.0.{build}
+
+install:
+ - set QTDIR=C:\Qt\5.9.1\mingw53_32
+ - set PATH=%PATH%;%QTDIR%\bin;C:\MinGW\bin
+ - git submodule update --init --recursive
+ - mkdir temp
+ - mkdir win32
+ - mkdir win32\i386
+ - mkdir win32\x64
+ - cd temp
+ - curl -L http://www.7-zip.org/a/7z1604-extra.7z --output 7z1604-extra.7z
+ - 7z x 7z1604-extra.7z
+ - mv .\7za.exe ..\win32\i386\7za.exe
+ - mv .\x64\7za.exe ..\win32\x64\7za.exe
+ - cd ..
+ - rd /s /q temp
+
+build_script:
+ - qmake RVGL_Companion.pro
+ - mingw32-make
+ 
+after_build:
+ - windeployqt --qmldir .\ .\release\RVGL_Companion.exe
+ - rm release/*.o
+ - rm release/*.cpp
+
+test: off
+
+artifacts:
+- path: release
+  name: RVGL-Companion
