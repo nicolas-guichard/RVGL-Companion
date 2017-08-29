@@ -318,7 +318,7 @@ ApplicationWindow {
 
             Label {
                 width: aboutDialog.availableWidth
-                text: "Better yet, it with do all of this without the hassle of even launching the app,"
+                text: "Better yet, it with do all of this without the hassle of even launching the app, "
                     + "thanks to the rvgl: URI scheme!"
                 wrapMode: Label.Wrap
                 font.pixelSize: 12
@@ -333,19 +333,40 @@ ApplicationWindow {
 
             Label {
                 width: aboutDialog.availableWidth
-                text: "7za.exe 1604, licensed under LGPL, comes bundled with this executable."
+                text: "7za.exe 1604, licensed under GNU LGPL v2.1 or higher, comes bundled with this executable.\n"
                     + "You can get its source code on 7-zip.org."
                 wrapMode: Label.Wrap
                 font.pixelSize: 12
                 visible: Qt.platform.os === "windows"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Qt.openUrlExternally("http://7-zip.org/")
+                }
             }
 
             Label {
                 width: aboutDialog.availableWidth
-                text: "The icon for this application is a derivative from freakishhorde's Companion Cube."
-                    + "You can get it at blendswap.com/blends/44396, used under CC-BY 3.0 licence."
+                text: "MiniUPnPc, is statically linked with this executable.\n"
+                    + "You can learn more about it on miniupnp.free.fr."
                 wrapMode: Label.Wrap
                 font.pixelSize: 12
+                visible: Qt.platform.os === "windows"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Qt.openUrlExternally("https://github.com/miniupnp/miniupnp/blob/master/miniupnpc/LICENSE")
+                }
+            }
+
+            Label {
+                width: aboutDialog.availableWidth
+                text: "The icon for this application is a derivative from freakishhorde's Companion Cube.\n"
+                    + "You can get it on blendswap.com, used under CC-BY 3.0 licence."
+                wrapMode: Label.Wrap
+                font.pixelSize: 12
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Qt.openUrlExternally("http://blendswap.com/blends/44396")
+                }
             }
 
             Label {
@@ -357,10 +378,14 @@ ApplicationWindow {
 
             Label {
                 width: aboutDialog.availableWidth
-                text: "This application is licenced under the terms of the GNU GPLv3 licence."
-                    + "You can learn more about this at github.com/Nico264/RVGL-Companion, where the source code is hosted."
+                text: "This application is licenced under the terms of the GNU GPLv3 licence.\n"
+                    + "You can learn more about this on github.com, where the source code is hosted."
                 wrapMode: Label.Wrap
                 font.pixelSize: 12
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Qt.openUrlExternally("http://github.com/Nico264/RVGL-Companion")
+                }
             }
         }
     }

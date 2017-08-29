@@ -31,7 +31,8 @@ DISTFILES += \
     README.md \
     LICENSE \
     .travis.yml \
-    .appveyor.yml
+    .appveyor.yml \
+    AUTHORS
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
