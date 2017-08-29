@@ -30,7 +30,8 @@ win32 {
 DISTFILES += \
     README.md \
     LICENSE \
-    .travis.yml
+    .travis.yml \
+    AUTHORS
 
 DEFINES += QT_DEPRECATED_WARNINGS
 

@@ -19,6 +19,7 @@
  * Dynamically linked, but limited set of dependencies:
    * [Qt5](https://www.qt.io/download-open-source/)
    * [p7zip](http://p7zip.sourceforge.net/)
+   * [miniupnpc](http://miniupnp.free.fr/)
  * Distribution method yet to choose
 
 ## How to build
