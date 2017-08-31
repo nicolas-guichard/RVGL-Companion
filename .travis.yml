@@ -4,7 +4,7 @@ dist: trusty
 os: linux
 compiler: gcc
 matrix:
-  includes:
+  include:
   - env: COMPANION_PLATFORM='linux64'
   - env: COMPANION_PLATFORM='windows32'
   - env: COMPANION_PLATFORM='windows64'
