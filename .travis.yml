@@ -12,7 +12,7 @@ matrix:
 install:
   - git submodule update --init --recursive
   - COMPANION_TARGET="${COMPANION_PLATFORM::${#COMPANION_PLATFORM}-2}"
-  - ./build/${COMPANION_TARGET}/requirements.sh
+  - ./travis/${COMPANION_TARGET}/requirements.sh
 
 before_script:
   - 'if [ "$TRAVIS_OS_NAME" == "linux" ]; then
