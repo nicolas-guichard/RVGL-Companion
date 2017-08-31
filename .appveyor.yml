@@ -8,10 +8,8 @@ install:
  - move miniupnp/miniupnpc miniupnpc
  - rd /s /q miniupnp
  - cd miniupnpc
- - mkdir build && cd build
- - cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=MinSizeRel
- - make && make install
- - cd ../..
+ - mingw32-make -f Makefile.mingw
+ - cd ..
  - mkdir temp
  - mkdir win32
  - mkdir win32\i386
