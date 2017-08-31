@@ -41,4 +41,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 unix: LIBS += -lminiupnpc
-win32: LIBS += -lminiupnpc.dll
+win32: LIBS += -L$${PWD}\miniupnpc -lminiupnpc
