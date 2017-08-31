@@ -20,6 +20,8 @@ HEADERS += \
 RESOURCES += qml.qrc
 
 win32 {
+    DEFINES += MINIUPNP_STATICLIB
+
     !contains(QMAKE_TARGET.arch, x86_64) {
         RESOURCES += win32.qrc
     } else {
@@ -32,7 +34,11 @@ DISTFILES += \
     LICENSE \
     .travis.yml \
     .appveyor.yml \
-    AUTHORS
+    AUTHORS \
+    travis/linux/build.sh \
+    travis/linux/requirements.sh \
+    travis/windows/build.sh \
+    travis/windows/requirements.sh
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -40,5 +46,4 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-unix: LIBS += -lminiupnpc
-win32: LIBS += -L$${PWD}\miniupnpc -lminiupnpc
+LIBS += -lminiupnpc

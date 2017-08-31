@@ -11,6 +11,7 @@ install:
  - cd miniupnpc
  - mingw32-make -f Makefile.mingw
  - cd ..
+ - copy miniupnpc\libminiupnpc.a libminiupnpc.a
  - mkdir temp
  - mkdir win32
  - mkdir win32\i386
@@ -26,9 +27,8 @@ install:
 build_script:
  - qmake RVGL_Companion.pro
  - mingw32-make
- 
+
 after_build:
- - copy miniupnpc\miniupnpc.dll release\libminiupnpc.dll
  - windeployqt --qmldir .\ .\release\RVGL_Companion.exe
  - rm release/*.o
  - rm release/*.cpp
@@ -36,5 +36,5 @@ after_build:
 test: off
 
 artifacts:
-- path: release
-  name: RVGL-Companion
+ - path: release
+   name: RVGL-Companion

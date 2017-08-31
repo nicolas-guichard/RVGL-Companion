@@ -1,49 +1,27 @@
 language: cpp
 sudo: required
 dist: trusty
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    - sourceline: 'ppa:beineri/opt-qt591-trusty'
-    packages:
-    - g++-7
-    - build-essential
-    - qt59base
-    - qt59quickcontrols2
-    - qt59declarative
-    - qt59quickcontrols
-    - iptables-dev
-    - libevent-dev
-    - libnfnetlink-dev
-    - uuid-dev
-
-before_install:
-  - export CC=gcc-7
-  - export CXX=g++-7
-  - sudo rm /usr/bin/g++
-  - sudo ln -s /usr/bin/g++-7 /usr/bin/g++
+os: linux
+compiler: gcc
+matrix:
+  includes:
+  - env: COMPANION_PLATFORM='linux64'
+  - env: COMPANION_PLATFORM='windows32'
+  - env: COMPANION_PLATFORM='windows64'
 
 install:
-  - git clone https://github.com/miniupnp/miniupnp
-  - mv miniupnp/miniupnpc miniupnpc
-  - rm -rf miniupnp
-  - cd miniupnpc
-  - CONFIG_OPTIONS="--ipv6 --igd2" make -j3
-  - sudo make install
-  - cd ..
+  - git submodule update --init --recursive
+  - COMPANION_TARGET="${COMPANION_PLATFORM::${#COMPANION_PLATFORM}-2}"
+  - ./build/${COMPANION_TARGET}/requirements.sh
 
 before_script:
   - 'if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    . /opt/qt59/bin/qt59-env.sh;
-    export DISPLAY=:99.0;
-    sh -e /etc/init.d/xvfb start;
-    echo "give xvfb some time to start";
-    sleep 3;
-  fi'
-  - qmake --version
+      . /opt/qt59/bin/qt59-env.sh;
+      export DISPLAY=:99.0;
+      sh -e /etc/init.d/xvfb start;
+      echo "give xvfb some time to start";
+      sleep 3;
+    fi'
 
 script:
-  - mkdir "build" && cd build
-  - qmake ../ PREFIX=/usr CONFIG+=GIT
-  - make
+  - source ./build/${COMPANION_TARGET}/build.sh
