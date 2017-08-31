@@ -13,7 +13,7 @@ int RVGLLauncher::closePort() {
 
 RVGLLauncher::RVGLLauncher(QObject *parent) : QObject(parent)
 {
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     nResult = WSAStartup(MAKEWORD(2,2), &wsaData);
 #endif
     devlist = upnpDiscover(2000, multicastif, minissdpdpath, localport, ipv6, ttl, &error);
@@ -23,9 +23,9 @@ RVGLLauncher::RVGLLauncher(QObject *parent) : QObject(parent)
 RVGLLauncher::~RVGLLauncher()
 {
     closePort();
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     nResult = WSACleanup();
-#endif /* _WIN32 */
+#endif
 }
 
 void RVGLLauncher::launch(QString dir, QStringList launchOptions) {

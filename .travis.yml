@@ -7,7 +7,7 @@ addons:
     - ubuntu-toolchain-r-test
     - sourceline: 'ppa:beineri/opt-qt591-trusty'
     packages:
-    - g++-5
+    - g++-7
     - build-essential
     - qt59base
     - qt59quickcontrols2
@@ -18,7 +18,11 @@ addons:
     - libnfnetlink-dev
     - uuid-dev
 
-before_script:
+before_install:
+  - export CC=gcc-7
+  - export CXX=g++-7
+
+install:
   - git clone https://github.com/miniupnp/miniupnp
   - mv miniupnp/miniupnpc miniupnpc
   - rm -rf miniupnp
@@ -26,6 +30,8 @@ before_script:
   - CONFIG_OPTIONS="--ipv6 --igd2" make -j3
   - sudo make install
   - cd ..
+
+before_script:
   - 'if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     . /opt/qt59/bin/qt59-env.sh;
     export DISPLAY=:99.0;

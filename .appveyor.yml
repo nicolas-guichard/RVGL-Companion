@@ -6,10 +6,9 @@ install:
  - git submodule update --init --recursive
  - git clone https://github.com/miniupnp/miniupnp
  - move miniupnp/miniupnpc miniupnpc
- - rd /s /q miniupnp
- - cd miniupnpc
+ - cd miniupnp/miniupnpc
  - mingw32-make -f Makefile.mingw
- - cd ..
+ - cd ../..
  - mkdir temp
  - mkdir win32
  - mkdir win32\i386

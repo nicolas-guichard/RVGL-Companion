@@ -6,12 +6,8 @@
 #include <QProcess>
 #include <miniupnpc/upnpcommands.h>
 #include <miniupnpc/miniupnpc.h>
-#ifdef _WIN32
+#ifdef Q_OS_WIN
 #include <winsock2.h>
-#endif
-
-#ifndef UPNP_LOCAL_PORT_ANY
-#define UPNP_LOCAL_PORT_ANY 0
 #endif
 
 class RVGLLauncher : public QObject
@@ -41,7 +37,7 @@ private:
     struct UPNPDev * devlist = 0;
     struct UPNPUrls urls;
     struct IGDdatas data;
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     WSADATA wsaData;
     int nResult;
 #endif
