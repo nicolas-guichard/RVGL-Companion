@@ -7,7 +7,6 @@ addons:
     - ubuntu-toolchain-r-test
     - sourceline: 'ppa:beineri/opt-qt591-trusty'
     packages:
-    - libminiupnpc-dev
     - g++-5
     - build-essential
     - qt59base
@@ -16,6 +15,12 @@ addons:
     - qt59quickcontrols
 
 before_script:
+  - git clone https://github.com/miniupnp/miniupnp
+  - cd miniupnp/miniupnpc
+  - mkdir build && cd build
+  - cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=MinSizeRel
+  - make && sudo make install
+  - cd ../../..
   - 'if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     . /opt/qt59/bin/qt59-env.sh;
     export DISPLAY=:99.0;
