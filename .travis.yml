@@ -24,4 +24,4 @@ before_script:
     fi'
 
 script:
-  - source ./build/${COMPANION_TARGET}/build.sh
+  - source ./travis/${COMPANION_TARGET}/build.sh
