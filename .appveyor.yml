@@ -3,12 +3,14 @@ version: 1.0.{build}
 install:
  - set QTDIR=C:\Qt\5.9.1\mingw53_32
  - set PATH=%PATH%;%QTDIR%\bin;C:\MinGW\bin
+ - set PATH=%PATH%;C:\msys64\mingw32\bin
  - git submodule update --init --recursive
  - git clone https://github.com/miniupnp/miniupnp
- - move miniupnp/miniupnpc miniupnpc
- - cd miniupnp/miniupnpc
+ - move miniupnp\miniupnpc miniupnpc
+ - rd /s /q miniupnp
+ - cd miniupnpc
  - mingw32-make -f Makefile.mingw
- - cd ../..
+ - cd ..\..
  - mkdir temp
  - mkdir win32
  - mkdir win32\i386
