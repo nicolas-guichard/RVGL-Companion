@@ -10,7 +10,8 @@ install:
  - rd /s /q miniupnp
  - cd miniupnpc
  - mingw32-make -f Makefile.mingw
- - cd ..\..
+ - cd ..
+ - copy miniupnpc\miniupnpc.dll miniupnpc.dll
  - mkdir temp
  - mkdir win32
  - mkdir win32\i386
