@@ -16,11 +16,13 @@ addons:
 
 before_script:
   - git clone https://github.com/miniupnp/miniupnp
-  - cd miniupnp/miniupnpc
+  - mv miniupnp/miniupnpc miniupnpc
+  - rm -rf miniupnp
+  - cd miniupnpc
   - mkdir build && cd build
   - cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=MinSizeRel
   - make && sudo make install
-  - cd ../../..
+  - cd ../..
   - 'if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     . /opt/qt59/bin/qt59-env.sh;
     export DISPLAY=:99.0;
