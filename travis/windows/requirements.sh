@@ -14,7 +14,7 @@ sudo apt-get update
 sudo apt-get --yes install upx-ucl autoconf automake \
     autopoint bash bison bzip2 flex gettext git g++ \
     gperf intltool libffi-dev libgdk-pixbuf2.0-dev \
-    libtool-bin libltdl-dev libssl-dev libxml-parser-perl make \
+    libtool libltdl-dev libssl-dev libxml-parser-perl make \
     openssl p7zip-full patch perl pkg-config python ruby scons \
     sed unzip wget xz-utils g++-7-multilib libc6-dev-i386
 
