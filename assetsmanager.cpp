@@ -15,7 +15,7 @@ void AssetsManager::fixCases(QDir directory) {
     QFileInfoList list = directory.entryInfoList();
     QString fileName;
     for (int i = 0; i < list.size(); ++i) {
-        if (list.at(i).isDir()) {
+        if (list.at(i).isDir() && list.at(i).fileName() != "lib") {
             fixCases(list.at(i).absoluteFilePath());
         }
         fileName = list.at(i).fileName();
@@ -65,9 +65,9 @@ void AssetsManager::installAsset(int index, QFile* file) {
     sevenzip->setWorkingDirectory(dir);
 #ifdef Q_OS_WIN
     QFile::copy(":/7za.exe", dir+"\\7za.exe");
-    sevenzip->start(dir+"\\7za.exe x -y "+file->fileName().replace('/', '\\'));
+    sevenzip->start(dir+"\\7za.exe", {"x", "-y", file->fileName().replace('/', '\\')});
 #else
-    sevenzip->start("7za x -y "+file->fileName());
+    sevenzip->start("7za", {"x", "-y", file->fileName()});
 #endif
     connect(sevenzip, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), [=](){
         sevenzip->deleteLater();
