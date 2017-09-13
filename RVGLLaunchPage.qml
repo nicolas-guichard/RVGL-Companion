@@ -195,6 +195,7 @@ Page {
                     settingsDialog.installsMirror = settingsDialog.installsMirror
                     rvglInstallComboBox.currentIndex = settings.currentInstall
                 }
+                Layout.fillWidth: true
             }
             Button {
                 text: "Launch!"
@@ -202,13 +203,16 @@ Page {
                 Layout.fillWidth: true
             }
             RowLayout {
+                Layout.fillWidth: true
                 Button {
                     text: "Open port (automatic if server)"
                     onClicked: launcher.openPort()
+                    Layout.fillWidth: true
                 }
                 Button {
                     text: "Close port"
                     onClicked: launcher.closePort()
+                    Layout.fillWidth: true
                 }
             }
         }
