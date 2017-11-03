@@ -1,31 +1,14 @@
 #include "rvgllauncher.h"
 
-int RVGLLauncher::openPort() {
-    return UPNP_AddPortMapping(urls.controlURL, data.first.servicetype,
-                        "2310", "2310", lanaddr, description,
-                        "UDP", 0, 0);
-}
-
-int RVGLLauncher::closePort() {
-    return UPNP_DeletePortMapping(urls.controlURL, data.first.servicetype, "2310", "UDP", 0);
-}
-
-
 RVGLLauncher::RVGLLauncher(QObject *parent) : QObject(parent)
 {
-#ifdef Q_OS_WIN
-    nResult = WSAStartup(MAKEWORD(2,2), &wsaData);
-#endif
-    devlist = upnpDiscover(2000, multicastif, minissdpdpath, localport, ipv6, ttl, &error);
-    UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr));
-}
-
-RVGLLauncher::~RVGLLauncher()
-{
-    closePort();
-#ifdef Q_OS_WIN
-    nResult = WSACleanup();
-#endif
+    PortManager* portManager = new PortManager;
+    portManager->moveToThread(&portManagerThread);
+    connect(this, &RVGLLauncher::discover, portManager, &PortManager::discover);
+    connect(this, &RVGLLauncher::openPort, portManager, &PortManager::openPort);
+    connect(this, &RVGLLauncher::closePort, portManager, &PortManager::closePort);
+    portManagerThread.start();
+    emit discover();
 }
 
 void RVGLLauncher::launch(QString dir, QStringList launchOptions) {
@@ -33,9 +16,10 @@ void RVGLLauncher::launch(QString dir, QStringList launchOptions) {
 }
 
 QProcess* RVGLLauncher::launchRaw(QString dir, QStringList launchOptions) {
-    int server = launchOptions.indexOf("-lobby");
-    if (server != -1 && launchOptions[server+1][0] == "-") {
-        openPort();
+    int lobbyConf = launchOptions.indexOf("-lobby");
+    bool isServer = lobbyConf != -1 && (launchOptions[lobbyConf+1] == "" || launchOptions[lobbyConf+1][0] == "-");
+    if (isServer) {
+        emit openPort();
     }
     QString exe;
     #ifdef Q_OS_WIN
@@ -50,8 +34,8 @@ QProcess* RVGLLauncher::launchRaw(QString dir, QStringList launchOptions) {
     connect(rvgl, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
             [=](){
         rvgl->deleteLater();
-        if (server != -1 && launchOptions[server+1][0] == "-") {
-            closePort();
+        if (isServer) {
+            emit closePort();
         }
     });
     return rvgl;

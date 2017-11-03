@@ -10,12 +10,14 @@ DEFINES += QAPPLICATION_CLASS=QGuiApplication
 SOURCES += main.cpp \
     assetsmanager.cpp \
     filedownloader.cpp \
-    rvgllauncher.cpp
+    rvgllauncher.cpp \
+    portmanager.cpp
 
 HEADERS += \
     assetsmanager.h \
     filedownloader.h \
-    rvgllauncher.h
+    rvgllauncher.h \
+    portmanager.h
 
 RESOURCES += qml.qrc
 

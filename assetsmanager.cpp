@@ -46,7 +46,7 @@ void AssetsManager::setProgress(int index, qint64 a, qint64 b) {
 }
 
 void AssetsManager::installAsset(QString URL) {
-    installAsset(QUrl(URL));
+    return installAsset(QUrl(URL));
 }
 
 void AssetsManager::installAsset(QUrl URL) {
