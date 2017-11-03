@@ -30,7 +30,11 @@ private:
     const char * multicastif = 0;
     const char * minissdpdpath = 0;
     const char * description = "RVGL Companion";
+#ifdef UPNP_LOCAL_PORT_ANY
     int localport = UPNP_LOCAL_PORT_ANY;
+#else
+    int localport = 0;
+#endif
     int error = 0;
     int ipv6 = 0;
     const char * port = "2310";

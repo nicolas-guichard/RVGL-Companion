@@ -26,12 +26,10 @@ if [ "$COMPANION_PLATFORM" = "windows64" ]; then
     MXE_TARGET=x86_64-w64-mingw32.static
 fi
 
-git clone https://github.com/mxe/mxe.git
-cd mxe
-rm src/miniupnpc-1-fixes.patch
-sed -e "s/1.9/2.0/g" -e "s/2923e453e880bb949e3d4da9f83dd3cb6f08946d35de0b864d0339cf70934464/d434ceb8986efbe199c5ca53f90ed53eab290b1e6d0530b717eb6fa49d61f93b/g" src/miniupnpc.mk -i
-make MXE_TARGET=${MXE_TARGET} qt5 miniupnpc
-cd ..
+MXE2_TARGET=$(echo "$MXE_TARGET" | sed 's/_/-/g')
+sudo apt-get --yes install \
+    mxe-${MXE2_TARGET}-qt \
+    mxe-${MXE2_TARGET}-miniupnpc
 
 mkdir temp
 mkdir win32

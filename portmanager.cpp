@@ -9,8 +9,13 @@ PortManager::PortManager(QObject *parent) : QObject(parent)
 
 void PortManager::discover() {
     int errorCode;
+#if MINIUPNPC_API_VERSION>=14
     devlist = upnpDiscover(timeout, multicastif, minissdpdpath,
                            localport, ipv6, ttl, &error);
+#else
+    devlist = upnpDiscover(timeout, multicastif, minissdpdpath,
+                           localport, ipv6, &error);
+#endif
     errorCode = UPNP_GetValidIGD(devlist, &urls, &data,
                                  lanaddr, sizeof(lanaddr));
     emit discoveryFinished(errorCode);
