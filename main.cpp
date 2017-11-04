@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.load("qrc:/main.qml");
-    engine.rootObjects().at(0)->setProperty("availableStyles", QQuickStyle::availableStyles());
+    engine.rootObjects().at(0)->setProperty("availableStyles", QStringList() << "Default" << "Material" << "Universal");
     engine.rootObjects().at(0)->setProperty("func", func);
     engine.rootObjects().at(0)->setProperty("option", option);
 
