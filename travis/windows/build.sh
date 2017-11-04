@@ -14,10 +14,6 @@ if [ "$COMPANION_PLATFORM" = "windows64" ]; then
     QMAKE_TARGET=x86_64
 fi
 
-export PATH=${MXE_DIR}/usr/bin/:$PATH
-export LD_LIBRARY_PATH=${MXE_DIR}/usr/${MXE_TARGET}/lib:$LD_LIBRARY_PATH
-export CPATH=${MXE_DIR}/usr/${MXE_TARGET}/include:$CPATH
-
 ${MXE_DIR}/usr/bin/${MXE_TARGET}-qmake-qt5 RVGL_Companion.pro CONFIG+=Release -spec win32-g++ QMAKE_TARGET.arch=${QMAKE_TARGET}
 make
 

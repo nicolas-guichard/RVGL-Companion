@@ -9,7 +9,7 @@ install:
  - move miniupnp\miniupnpc miniupnpc
  - rd /s /q miniupnp
  - cd miniupnpc
- - mingw32-make -f Makefile.mingw libminiupnpc.a
+ - mingw32-make -f Makefile.mingw
  - cd ..
  - copy miniupnpc\libminiupnpc.a libminiupnpc.a
  - mkdir temp
