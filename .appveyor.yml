@@ -9,7 +9,7 @@ install:
  - move miniupnp\miniupnpc miniupnpc
  - rd /s /q miniupnp
  - cd miniupnpc
- - mingw32-make -f Makefile.mingw
+ - mingw32-make -f Makefile.mingw libminiupnpc.a
  - cd ..
  - copy miniupnpc\libminiupnpc.a libminiupnpc.a
  - mkdir temp
@@ -25,7 +25,7 @@ install:
  - rd /s /q temp
 
 build_script:
- - qmake RVGL_Companion.pro
+ - qmake RVGL_Companion.pro CONFIG+=Release -spec win32-g++ QMAKE_TARGET.arch=x86_64
  - mingw32-make
 
 after_build:
