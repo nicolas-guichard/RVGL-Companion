@@ -9,6 +9,10 @@ Page {
     property string name: "asset_installer"
 
     property string option: window.option
+    onOptionChanged: {
+        comboBox.currentIndex = -1
+        assetURL.text = option
+    }
 
     ColumnLayout {
         width: parent.width
@@ -27,6 +31,7 @@ Page {
             }
 
             ComboBox {
+                id: comboBox
                 Layout.fillWidth: true
                 editable: true
                 model: ListModel {
