@@ -30,6 +30,7 @@ MXE2_TARGET=$(echo "$MXE_TARGET" | sed 's/_/-/g')
 sudo apt-get --yes install \
     mxe-${MXE2_TARGET}-qtbase \
     mxe-${MXE2_TARGET}-qtquickcontrols2 \
+    mxe-${MXE2_TARGET}-qtquickcontrols \
     mxe-${MXE2_TARGET}-qtdeclarative \
     mxe-${MXE2_TARGET}-miniupnpc
 

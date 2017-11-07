@@ -23,7 +23,7 @@ RESOURCES += qml.qrc
 
 win32 {
     DEFINES += MINIUPNP_STATICLIB STATICLIB
-    LIBS += -lWs2_32 -lIphlpapi
+    LIBS += -lws2_32 -liphlpapi
 
     !contains(QMAKE_TARGET.arch, x86_64) {
         RESOURCES += win32.qrc
