@@ -1,5 +1,5 @@
 # RVGL Companion
-[![Travis CI](https://travis-ci.org/Nico264/RVGL-Companion.svg?branch=upnp)](https://travis-ci.org/Nico264/RVGL-Companion) [![AppVeyor](https://ci.appveyor.com/api/projects/status/unb6x2crul0x4mec/branch/upnp?svg=true)](https://ci.appveyor.com/project/Nico264/rvgl-companion/branch/upnp)
+[![Travis CI](https://travis-ci.org/Nico264/RVGL-Companion.svg)](https://travis-ci.org/Nico264/RVGL-Companion) [![AppVeyor](https://ci.appveyor.com/api/projects/status/unb6x2crul0x4mec?svg=true)](https://ci.appveyor.com/project/Nico264/rvgl-companion)
 
  A companion app for RVGL.
 
@@ -25,9 +25,9 @@
 
 ## How to build
  Using Qt Creator with adequate Qt libs and miniupnpc: import, build, run!
- 
+
  Building for Windows requires 7za.exe to be put in win32/(i386|x64)/
- 
+
  Runing on Linux requires p7zip and miniupnpc.
 
 ## Contributing
