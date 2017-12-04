@@ -70,12 +70,13 @@ Page {
                     assetURL.text = availableAssets.get(currentIndex).source
                 }
                 Component.onCompleted: {
+                    var lastRVGLVersion = "17.1124a"
                     if (Qt.platform.os === "windows") {
-                        availableAssets.insert(0, {modelData: "RVGL without music", source: "http://files.re-volt.io/rvgl_full/rvgl_17.0327a_win32_nomusic.7z"})
-                        availableAssets.insert(0, {modelData: "RVGL with music", source: "http://files.re-volt.io/rvgl_full/rvgl_17.0327a_win32_music.7z"})
+                        availableAssets.insert(0, {modelData: "RVGL without music", source: "http://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLVersion+"_win32_nomusic.7z"})
+                        availableAssets.insert(0, {modelData: "RVGL with music", source: "http://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLVersion+"_win32_music.7z"})
                     } else {
-                        availableAssets.insert(0, {modelData: "RVGL without music", source: "http://files.re-volt.io/rvgl_full/rvgl_17.0327a_linux_nomusic.7z"})
-                        availableAssets.insert(0, {modelData: "RVGL with music", source: "http://files.re-volt.io/rvgl_full/rvgl_17.0327a_linux_music.7z"})
+                        availableAssets.insert(0, {modelData: "RVGL without music", source: "http://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLVersion+"_linux_nomusic.7z"})
+                        availableAssets.insert(0, {modelData: "RVGL with music", source: "http://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLVersion+"_linux_music.7z"})
                     }
                 }
             }
