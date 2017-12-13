@@ -35,9 +35,10 @@ int main(int argc, char *argv[])
             QSettings classes("HKEY_CURRENT_USER\\Software\\Classes\\rvgl",
                                QSettings::Registry64Format);
             classes.setValue(".", "rvgl scheme handler");
-            QSettings protocol("HKEY_CURRENT_USER\\Software\\Classes\\rvgl\\URL Protocol",
+            classes.setValue("URL Protocol", "");
+            QSettings shell("HKEY_CURRENT_USER\\Software\\Classes\\rvgl\\shell",
                                QSettings::Registry64Format);
-            protocol.setValue(".", "");
+            shell.setValue(".", "open");
             QSettings command("HKEY_CURRENT_USER\\Software\\Classes\\rvgl\\shell\\open\\command",
                                QSettings::Registry64Format);
             command.setValue(".", "\""+QGuiApplication::applicationFilePath().replace('/', '\\')+"\" \"%1\"");
@@ -45,9 +46,10 @@ int main(int argc, char *argv[])
         QSettings classes("HKEY_CURRENT_USER\\Software\\Classes\\rvgl",
                            QSettings::Registry32Format);
         classes.setValue(".", "rvgl scheme handler");
-        QSettings protocol("HKEY_CURRENT_USER\\Software\\Classes\\rvgl\\URL Protocol",
+        classes.setValue("URL Protocol", "");
+        QSettings shell("HKEY_CURRENT_USER\\Software\\Classes\\rvgl\\shell",
                            QSettings::Registry32Format);
-        protocol.setValue(".", "");
+        shell.setValue(".", "open");
         QSettings command("HKEY_CURRENT_USER\\Software\\Classes\\rvgl\\shell\\open\\command",
                            QSettings::Registry32Format);
         command.setValue(".", "\""+QGuiApplication::applicationFilePath().replace('/', '\\')+"\" \"%1\"");
