@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     app.setApplicationName("RVGL Companion");
     app.setOrganizationName("Re-Volt.io");
     app.setAttribute(Qt::AA_EnableHighDpiScaling);
-    app.setApplicationVersion("1.1-RC2");
+    app.setApplicationVersion("1.1-RC3");
     app.setWindowIcon(QIcon("qrc:/icon.ico"));
 
     QSettings settings;

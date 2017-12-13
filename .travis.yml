@@ -8,20 +8,20 @@ matrix:
   - env: COMPANION_PLATFORM='linux64'
   - env: COMPANION_PLATFORM='windows32'
   - env: COMPANION_PLATFORM='windows64'
-
 install:
-  - git submodule update --init --recursive
-  - COMPANION_TARGET="${COMPANION_PLATFORM::${#COMPANION_PLATFORM}-2}"
-  - ./travis/${COMPANION_TARGET}/requirements.sh
-
+- git submodule update --init --recursive
+- COMPANION_TARGET="${COMPANION_PLATFORM::${#COMPANION_PLATFORM}-2}"
+- "./travis/${COMPANION_TARGET}/requirements.sh"
 before_script:
-  - 'if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      . /opt/qt59/bin/qt59-env.sh;
-      export DISPLAY=:99.0;
-      sh -e /etc/init.d/xvfb start;
-      echo "give xvfb some time to start";
-      sleep 3;
-    fi'
-
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then . /opt/qt59/bin/qt59-env.sh; export DISPLAY=:99.0;
+  sh -e /etc/init.d/xvfb start; echo "give xvfb some time to start"; sleep 3; fi
 script:
-  - source ./travis/${COMPANION_TARGET}/build.sh
+- source ./travis/${COMPANION_TARGET}/build.sh
+deploy:
+  provider: releases
+  api_key:
+    secure: lEGH5FvxWvGkVTLn7fYe1xUJSrxUOVgnH6fUyLNXfaN2y0mS6OMQlUFVrl52bN3yM0nusqf/aUse3/vLzYKzOgmsVS071M2wi13IzXijJY2Lg6hFtavEqeZeDoU0R+mfuotdnD+R0dvITP/xuWhigvHe4cySGw+E7tQA76qzY1+nvAu1ErrnHq8vA4Zj+JSq+vtNR4ZfnUAEbhoxpDU7DX+QIkdiPexyN0NBikPUjT3n5bcHiH1ErRugrxTv2Tft3PWfM1GRe+7Sk1rOjHD20ZKDXzqn7ZQVKNUlLFwX+b2Z4eLmS1p3XI9o/cE8JBR8yvelvUboIjqO7jlsf3Urg+cnqvjb5EUzm4QjWNpHpiVBKaj/09x09geJbaBlX1i79t5FqjloiD6PZKW47ig0tNEBsZce2JhNLkZTY949rbxmscOL86aLplMjJlIbFlyRmbtOVShtwvR5iQiaLNCuANBZUeb4GIgOFNUzUN/kssWNGGKpggqNFNDxbed01yKXD2F7F8hZy7jSjMHmkhNYjlMpQQJE8v2f0W/+O/BGNalDatwj+oKNDz49mREeLCBvetjYSB80WsFuVKBp0ORYImyxrJ3LGxYiGc0SsL1KgVfPJauqrJx9ydoNNEebzMRsavbQUm4q1+RedHCqaSJqSjGBaLb9m4gfWXwCizostjg=
+  file: $(if [ "$COMPANION_PLATFORM" = 'linux64' ]; then echo RVGL_Companion; else echo "release/RVGL_Companion.exe"; fi)
+  on:
+    repo: Nico264/RVGL-Companion
+    tags: true
