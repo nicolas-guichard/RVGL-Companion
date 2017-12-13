@@ -11,6 +11,11 @@ RVGLLauncher::RVGLLauncher(QObject *parent) : QObject(parent)
     emit discover();
 }
 
+RVGLLauncher::~RVGLLauncher(){
+    portManagerThread.quit();
+    portManagerThread.wait();
+}
+
 void RVGLLauncher::launch(QString dir, QStringList launchOptions) {
     launchRaw(dir, launchOptions);
 }
