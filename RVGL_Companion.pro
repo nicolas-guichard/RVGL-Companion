@@ -41,7 +41,9 @@ DISTFILES += \
     travis/linux/build.sh \
     travis/linux/requirements.sh \
     travis/windows/build.sh \
-    travis/windows/requirements.sh
+    travis/windows/requirements.sh \
+    travis/windows/package.sh \
+    travis/linux/package.sh
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
