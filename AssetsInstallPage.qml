@@ -70,16 +70,16 @@ Page {
                     assetURL.text = availableAssets.get(currentIndex).source
                 }
                 Component.onCompleted: {
-                    var lastRVGLClassic = "17.1124a"
-                    var lastRVGLShader = "17.1124s"
+                    var lastRVGLClassic = "17.1222a"
+                    var lastRVGLShader = "17.1222s"
                     if (Qt.platform.os === "windows") {
                         availableAssets.insert(0, {modelData: "RVGL Shader Edition", source: "http://rv12.revoltzone.net/downloads/rvgl_"+lastRVGLShader+"_win32.7z"})
-                        availableAssets.insert(0, {modelData: "RVGL without music", source: "http://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLClassic+"_win32_nomusic.7z"})
-                        availableAssets.insert(0, {modelData: "RVGL with music", source: "http://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLClassic+"_win32_music.7z"})
+                        availableAssets.insert(0, {modelData: "RVGL without music", source: "https://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLClassic+"_win32_nomusic.7z"})
+                        availableAssets.insert(0, {modelData: "RVGL with music", source: "https://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLClassic+"_win32_music.7z"})
                     } else {
                         availableAssets.insert(0, {modelData: "RVGL Shader Edition", source: "http://rv12.revoltzone.net/downloads/rvgl_"+lastRVGLShader+"_linux.7z"})
-                        availableAssets.insert(0, {modelData: "RVGL without music", source: "http://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLClassic+"_linux_nomusic.7z"})
-                        availableAssets.insert(0, {modelData: "RVGL with music", source: "http://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLClassic+"_linux_music.7z"})
+                        availableAssets.insert(0, {modelData: "RVGL without music", source: "https://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLClassic+"_linux_nomusic.7z"})
+                        availableAssets.insert(0, {modelData: "RVGL with music", source: "https://files.re-volt.io/rvgl_full/rvgl_"+lastRVGLClassic+"_linux_music.7z"})
                     }
                 }
             }
