@@ -38,31 +38,31 @@ Page {
                     id: availableAssets
                     ListElement {
                         modelData: "IO track pack"
-                        source: "http://files.re-volt.io/packs/tracks.7z"
+                        source: "https://files.re-volt.io/packs/tracks.7z"
                     }
                     ListElement {
                         modelData: "IO tracks' loading screens"
-                        source: "http://files.re-volt.io/packs/loadlevel.7z"
+                        source: "https://files.re-volt.io/packs/loadlevel.7z"
                     }
                     ListElement {
                         modelData: "IO car pack"
-                        source: "http://files.re-volt.io/packs/cars.7z"
+                        source: "https://files.re-volt.io/packs/cars.7z"
                     }
                     ListElement {
                         modelData: "IO LMS & Tag pack"
-                        source: "http://files.re-volt.io/packs/lmstag.7z"
+                        source: "https://files.re-volt.io/packs/lmstag.7z"
                     }
                     ListElement {
                         modelData: "IO drift pack"
-                        source: "http://files.re-volt.io/packs/drift.7z"
+                        source: "https://files.re-volt.io/packs/drift.7z"
                     }
                     ListElement {
                         modelData: "IO clockwork pack"
-                        source: "http://files.re-volt.io/packs/clockworks.7z"
+                        source: "https://files.re-volt.io/packs/clockworks.7z"
                     }
                     ListElement {
                         modelData: "RVR month track pack"
-                        source: "http://files.re-volt.io/packs/month_pack.7z"
+                        source: "https://files.re-volt.io/packs/month_pack.7z"
                     }
                 }
                 currentIndex: -1
