@@ -2,6 +2,6 @@
 
 set -xue
 
-mv "release/RVGL_Companion.exe" "RVGL_Companion_$COMPANION_PLATFORM"
+mv "release/RVGL_Companion.exe" "RVGL_Companion_$COMPANION_PLATFORM.exe"
 
 set +xue

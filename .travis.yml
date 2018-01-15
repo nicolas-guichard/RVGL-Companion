@@ -23,7 +23,7 @@ deploy:
   provider: releases
   api_key:
     secure: lEGH5FvxWvGkVTLn7fYe1xUJSrxUOVgnH6fUyLNXfaN2y0mS6OMQlUFVrl52bN3yM0nusqf/aUse3/vLzYKzOgmsVS071M2wi13IzXijJY2Lg6hFtavEqeZeDoU0R+mfuotdnD+R0dvITP/xuWhigvHe4cySGw+E7tQA76qzY1+nvAu1ErrnHq8vA4Zj+JSq+vtNR4ZfnUAEbhoxpDU7DX+QIkdiPexyN0NBikPUjT3n5bcHiH1ErRugrxTv2Tft3PWfM1GRe+7Sk1rOjHD20ZKDXzqn7ZQVKNUlLFwX+b2Z4eLmS1p3XI9o/cE8JBR8yvelvUboIjqO7jlsf3Urg+cnqvjb5EUzm4QjWNpHpiVBKaj/09x09geJbaBlX1i79t5FqjloiD6PZKW47ig0tNEBsZce2JhNLkZTY949rbxmscOL86aLplMjJlIbFlyRmbtOVShtwvR5iQiaLNCuANBZUeb4GIgOFNUzUN/kssWNGGKpggqNFNDxbed01yKXD2F7F8hZy7jSjMHmkhNYjlMpQQJE8v2f0W/+O/BGNalDatwj+oKNDz49mREeLCBvetjYSB80WsFuVKBp0ORYImyxrJ3LGxYiGc0SsL1KgVfPJauqrJx9ydoNNEebzMRsavbQUm4q1+RedHCqaSJqSjGBaLb9m4gfWXwCizostjg=
-  file: RVGL_Companion_$COMPANION_PLATFORM
+  file: "$(if [ $COMPANION_PLATFORM = 'linux64' ]; then echo RVGL_Companion_$COMPANION_PLATFORM; else echo RVGL_Companion_$COMPANION_PLATFORM.exe; fi)"
   skip_cleanup: true
   on:
     repo: Nico264/RVGL-Companion
